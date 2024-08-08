@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>带有移动彩色点的图片</title>
+    <style>
+        /* CSS 样式 */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .image-container {
+            position: relative;
+            width: 800px; /* 调整容器大小 */
+            height: 600px; /* 调整容器大小 */
+            background-image: url('Bind_minimap.webp'); /* 背景图片 */
+            background-size: contain; /* 确保图片完全显示 */
+            background-position: center;
+            background-repeat: no-repeat; /* 防止图片重复 */
+        }
+
+        .dot {
+            position: absolute;
+            width: 10px; /* 调整大小 */
+            height: 10px; /* 调整大小 */
+            border-radius: 50%;
+            background-color: blue; /* 默认颜色 */
+            pointer-events: none; /* 确保点不会阻挡鼠标事件 */
+            transition: transform 10s ease-in-out; /* 平滑移动过渡，时间延长到10秒 */
+        }
+
+        .blue {
+            background-color: blue;
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        .orange {
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+    <div class="image-container">
+        <div class="dot blue"></div>
+        <div class="dot blue"></div>
+        <div class="dot blue"></div>
+        <div class="dot blue"></div>
+        <div class="dot blue"></div>
+
+        <div class="dot red"></div>
+        <div class="dot red"></div>
+        <div class="dot red"></div>
+        <div class="dot red"></div>
+
+        <div class="dot orange"></div>
+    </div>
+
+    <script>
+        // JavaScript 代码
+        document.addEventListener("DOMContentLoaded", () => {
+            const dots = document.querySelectorAll(".dot");
+            const container = document.querySelector(".image-container");
+
+            // 初始化点的位置
+            dots.forEach(dot => {
+                setRandomPosition(dot);
+                moveDot(dot);
+            });
+
+            function setRandomPosition(dot) {
+                const containerWidth = container.offsetWidth;
+                const containerHeight = container.offsetHeight;
+
+                // 确保点不会移动到容器外部
+                const randomX = Math.random() * (containerWidth - 10); // 10 是点的直径
+                const randomY = Math.random() * (containerHeight - 10);
+
+                dot.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            }
+
+            function moveDot(dot) {
+                setInterval(() => {
+                    setRandomPosition(dot);
+                }, 12000); // 每12秒移动一次
+            }
+        });
+    </script>
+</body>
+</html>
